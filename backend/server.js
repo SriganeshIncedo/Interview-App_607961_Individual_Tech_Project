@@ -75,27 +75,52 @@ const transporter = nodemailer.createTransport({
 });
 
 cron.schedule("00 58 11 * * *", () => {
-  const sql = "SELECT interviewer, grade, interviewee, recruiter, project, position, DATE_FORMAT(date, '%Y-%m-%d') as date, photo, result FROM interviews WHERE date = DATE(NOW())";
-  connection.query(sql,(error, results) => {
+  const sql =
+    "SELECT interviewer, grade, interviewee, recruiter, project, position, DATE_FORMAT(date, '%Y-%m-%d') as date, photo, result FROM interviews WHERE date = DATE(NOW())";
+  connection.query(sql, (error, results) => {
     if (error) {
       console.error("Error fetching data:", error);
     } else {
       console.log("Data fetched successfully");
-      
+
       const doc = new PDFDocument();
-      const date = moment().format("DD-MM-YYYY")
+      const date = moment().format("DD-MM-YYYY");
       const outputFilename = `Incedo interview-report-${date}.pdf`;
       const outputStream = fs.createWriteStream(outputFilename);
       doc.pipe(outputStream);
-      doc.fontSize(20).fillColor('orangered').text('Incedo'.slice(0, 6), { align: "center"});
-      doc.fontSize(10).fillColor('black').text(`Daily Interview Report (${date})`, { align: "center" });
-      
+      doc
+        .fontSize(20)
+        .fillColor("orangered")
+        .text("Incedo".slice(0, 6), { align: "center" });
+      doc
+        .fontSize(10)
+        .fillColor("black")
+        .text(`Daily Interview Report (${date})`, { align: "center" });
+
       const table = {
-        headers: ["Interviewer", "Grade", "Interviewee", "Recruiter", "Project", "Position", "Date", "Result"],
-        rows: results.map(interview => [interview.interviewer, interview.grade, interview.interviewee, interview.recruiter, interview.project, interview.position, interview.date, interview.result])
+        headers: [
+          "Interviewer",
+          "Grade",
+          "Interviewee",
+          "Recruiter",
+          "Project",
+          "Position",
+          "Date",
+          "Result",
+        ],
+        rows: results.map((interview) => [
+          interview.interviewer,
+          interview.grade,
+          interview.interviewee,
+          interview.recruiter,
+          interview.project,
+          interview.position,
+          interview.date,
+          interview.result,
+        ]),
       };
       doc.moveDown().table(table, { align: "center" });
-      
+
       doc.end();
 
       const mailOptions = {
@@ -139,7 +164,7 @@ cron.schedule("00 58 11 * * *", () => {
             </tbody>
           </table>
         `,
-        attachments: [{ filename: outputFilename, path: outputFilename }]
+        attachments: [{ filename: outputFilename, path: outputFilename }],
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
