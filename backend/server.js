@@ -69,12 +69,12 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "sriganesh0908@gmail.com",
-    pass: "myuhvpumiaygiech",
+    user: "user@gmail.com",
+    pass: "myuhvpumiaygiech", //generate
   },
 });
 
-cron.schedule("55 27 21 * * *", () => {
+cron.schedule("00 58 11 * * *", () => {
   const sql = "SELECT interviewer, grade, interviewee, recruiter, project, position, DATE_FORMAT(date, '%Y-%m-%d') as date, photo, result FROM interviews WHERE date = DATE(NOW())";
   connection.query(sql,(error, results) => {
     if (error) {
@@ -99,8 +99,8 @@ cron.schedule("55 27 21 * * *", () => {
       doc.end();
 
       const mailOptions = {
-        from: "sriganesh0908@gmail.com",
-        to: "sriganesh1619io@gmail.com",
+        from: "from@gmail.com",
+        to: "to@gmail.com",
         subject: "Incedo Daily Interview Report",
         html: `
       <h1>Incedo Daily Interview Report ${date}</h1>
