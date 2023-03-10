@@ -126,9 +126,10 @@ cron.schedule("00 58 11 * * *", () => {
       const mailOptions = {
         from: "from@gmail.com",
         to: "to@gmail.com",
-        subject: "Incedo Daily Interview Report",
+        subject: `Incedo Daily Interview Report (${date})`,
         html: `
-      <h1>Incedo Daily Interview Report ${date}</h1>
+      <h1>Incedo Daily Interview Report (${date})</h1>
+      <p>This report is generated to keep you updated on the progress of our hiring process and the status of the candidates dated ${date}. Please do not reply to this auto generated email.</p>
           <table class="table table-striped table-bordered border-primary" border="1">
             <thead>
               <tr>
@@ -163,6 +164,10 @@ cron.schedule("00 58 11 * * *", () => {
                 .join("")}
             </tbody>
           </table>
+
+          <p>Regards,</p>
+          <p>Team HR</p>
+          <p>Incedo</p>
         `,
         attachments: [{ filename: outputFilename, path: outputFilename }],
       };
