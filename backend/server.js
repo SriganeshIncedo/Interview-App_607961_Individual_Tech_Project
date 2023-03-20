@@ -74,7 +74,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-cron.schedule("00 58 11 * * *", () => {
+cron.schedule("59 58 23 * * *", () => {
   const sql =
     "SELECT interviewer, grade, interviewee, recruiter, project, position, DATE_FORMAT(date, '%Y-%m-%d') as date, photo, result FROM interviews WHERE date = DATE(NOW())";
   connection.query(sql, (error, results) => {
@@ -124,7 +124,7 @@ cron.schedule("00 58 11 * * *", () => {
       doc.end();
 
       const mailOptions = {
-        from: "from@gmail.com",
+        from: "user@gmail.com",
         to: "to@gmail.com",
         subject: `Incedo Daily Interview Report (${date})`,
         html: `
@@ -140,7 +140,6 @@ cron.schedule("00 58 11 * * *", () => {
                 <th>Project</th>
                 <th>Position</th>
                 <th>Date</th>
-                <th>Photo</th>
                 <th>Result</th>
               </tr>
             </thead>
@@ -156,7 +155,6 @@ cron.schedule("00 58 11 * * *", () => {
                   <td>${interview.project}</td>
                   <td>${interview.position}</td>
                   <td>${interview.date}</td>
-                  <td>${interview.photo}</td>
                   <td>${interview.result}</td>
                 </tr>
               `
@@ -164,10 +162,12 @@ cron.schedule("00 58 11 * * *", () => {
                 .join("")}
             </tbody>
           </table>
-
-          <p>Regards,</p>
-          <p>Team HR</p>
-          <p>Incedo</p>
+          <br/>
+          Regards,
+          <br/>
+          <b>Team HR</b>
+          <br/>
+          Incedo
         `,
         attachments: [{ filename: outputFilename, path: outputFilename }],
       };

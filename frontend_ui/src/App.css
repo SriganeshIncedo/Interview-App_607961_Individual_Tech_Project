@@ -1,3 +1,7 @@
-.row{
+.row {
   margin-bottom: 10px;
+}
+.modal-backdrop {
+  --bs-backdrop-zindex: 0;
+  --bs-backdrop-bg: #000 important;
 }

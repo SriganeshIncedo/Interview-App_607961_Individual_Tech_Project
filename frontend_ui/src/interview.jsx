@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import Header from "./Header";
 
 class InterviewForm extends Component {
   constructor(props) {
@@ -147,40 +148,7 @@ class InterviewForm extends Component {
   render() {
     return (
       <div>
-        <nav
-          class="navbar navbar-expand-lg navbar-light"
-          style={{ "background-color": "#e3f2fd" }}
-        >
-          <div class="container-fluid">
-            <a
-              class="navbar-brand"
-              href="/"
-              style={{ "font-weight": "bold", color: "orangered" }}
-            >
-              incedo
-            </a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/">
-                    Home
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Header />
         <br />
         <div class="container">
           <div class="col-sm-6" style={{ float: "none", margin: "auto" }}>
